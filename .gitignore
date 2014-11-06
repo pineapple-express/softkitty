@@ -29,3 +29,8 @@ node_modules
 
 #do not commit local mongo
 data/*
+node_modules
+dist
+.tmp
+.sass-cache
+bower_components
