@@ -60,6 +60,9 @@ router.route("/logEntry")
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', router);
+app.get("*", function(req, res) {
+	res.sendfile("./public/index.html");
+});
 
 // START THE SERVER
 // =============================================================================
