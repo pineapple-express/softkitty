@@ -77,7 +77,7 @@ router.route("/logEntry")
 		});
 	})
 	.get(function(req,res) {
-		LogEntry.find(function(err, logEntries) {
+		LogEntry.find().sort({ timestamp: -1}).exec(function(err, logEntries) {
 			if (err) {
 				log.console("Error getting all logEntries");
 				res.send(err);
