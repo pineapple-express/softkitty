@@ -41,7 +41,6 @@ router.route("/logEntry")
 		var logEntry = new LogEntry();
 		var tags = req.body.tags;
 		console.log("request", req.body);
-		logEntry.name = req.body.name;
 		logEntry.rating = req.body.rating;
 		logEntry.tags = tags
 		logEntry.message = req.body.message;
