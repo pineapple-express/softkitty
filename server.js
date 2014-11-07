@@ -81,14 +81,21 @@ router.route("/logEntry")
 		LogEntry.find(function(err, logEntries) {
 			if (err) {
 				log.console("Error getting all logEntries");
-				res.send(err)
+				res.send(err);
 			}
 			res.json(logEntries);
 		});
 	});	
 
 router.route("/tags") 
-	.get(function(req,res) {
+	.get(function(req, res) {
+		Tag.find(function(err, tags) {
+			if (err) {
+				log.console("Error getting all tags");
+				res.send(err);
+			}
+			res.json(tags);
+		});
 	});	
 
 
