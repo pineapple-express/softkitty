@@ -89,7 +89,7 @@ router.route("/logEntry")
 
 router.route("/tags") 
 	.get(function(req, res) {
-		Tag.find(function(err, tags) {
+		Tag.find().sort({ name: 1 }).exec(function(err, tags) {
 			if (err) {
 				log.console("Error getting all tags");
 				res.send(err);
