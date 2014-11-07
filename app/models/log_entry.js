@@ -2,8 +2,8 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var LogEntrySchema   = new Schema({
-	message: String,
-	rating: String,
+	message: {type: String, trim: true},
+	rating: {type: String, trim: true},
 	timestamp: { type: Date, required: true, default: Date.now },
 	tags: [String]
 });

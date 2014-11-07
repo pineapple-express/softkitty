@@ -6,10 +6,11 @@
 // call the packages we need
 var express    = require('express'); 		// call express
 var app        = express(); 				// define our app using express
-var bodyParser = require('body-parser');
+var bodyParser = require('body-parser')
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/softkity');
 var LogEntry = require('./app/models/log_entry');
+var Tag = require('./app/models/tag');
 
 
 // configure app to use bodyParser()
@@ -38,19 +39,44 @@ router.get('/', function(req, res) {
 router.route("/logEntry")
 	.post(function(req,res) {
 		var logEntry = new LogEntry();
+		var tags = req.body.tags;
+		console.log("request", req.body);
 		logEntry.name = req.body.name;
 		logEntry.rating = req.body.rating;
-		logEntry.tags = req.body.tags;
+		logEntry.tags = tags
+		logEntry.message = req.body.message;
 
 		logEntry.save(function(err) {
 			console.log("Saving logEntry", logEntry);
 			if (err) {
 				console.log("Error saving logEntry: ", err);
-				res.status(400).send(err)
+				res.status(400).send(err);
 			}
 			res.json({message: 'logEntry created'});
 		})
-})
+
+		Tag.findOne({name: tags}, function(err, tag) {
+			console.log("tag found: ", tag);
+			if (err) {
+				log.console("Error finding distinct tags: ", tag);
+			}
+			else if (tag == null) {
+				console.log("saving tags: ", tags);
+				var t = new Tag();
+				t.name = tags;
+				t.save(function(err) {
+					if (err) {
+						console.log("Error saving tag: ", tags)
+						res.status(400).send(err);
+					}
+				});
+			}
+			else {
+				console.log("Tag already exists: ", tag);
+			}
+
+		});
+	})
 	.get(function(req,res) {
 		LogEntry.find(function(err, logEntries) {
 			if (err) {
@@ -59,7 +85,12 @@ router.route("/logEntry")
 			}
 			res.json(logEntries);
 		});
-});	
+	});	
+
+router.route("/tags") 
+	.get(function(req,res) {
+	});	
+
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
