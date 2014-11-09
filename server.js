@@ -54,7 +54,7 @@ router.route("/logEntry")
 			res.json({message: 'logEntry created'});
 		})
 
-		Tag.findOne({name: tags}, function(err, tag) {
+		Tag.findOne({label: tags}, function(err, tag) {
 			console.log("tag found: ", tag);
 			if (err) {
 				log.console("Error finding distinct tags: ", tag);
