@@ -62,7 +62,7 @@ router.route("/logEntry")
 			else if (tag == null) {
 				console.log("saving tags: ", tags);
 				var t = new Tag();
-				t.name = tags;
+				t.label = tags;
 				t.save(function(err) {
 					if (err) {
 						console.log("Error saving tag: ", tags)
@@ -88,7 +88,7 @@ router.route("/logEntry")
 
 router.route("/tags") 
 	.get(function(req, res) {
-		Tag.find().sort({ name: 1 }).exec(function(err, tags) {
+		Tag.find().sort({ label: 1 }).exec(function(err, tags) {
 			if (err) {
 				log.console("Error getting all tags");
 				res.send(err);

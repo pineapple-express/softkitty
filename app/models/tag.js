@@ -2,7 +2,7 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var TagSchema   = new Schema({
-	name: {type: String, trim: true}
+	label: {type: String, trim: true}
 });
 
 module.exports = mongoose.model('Tag', TagSchema);
