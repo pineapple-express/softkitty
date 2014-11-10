@@ -54,26 +54,28 @@ router.route("/logEntry")
 			res.json({message: 'logEntry created'});
 		})
 
-		Tag.findOne({label: tags}, function(err, tag) {
-			console.log("tag found: ", tag);
-			if (err) {
-				log.console("Error finding distinct tags: ", tag);
-			}
-			else if (tag == null) {
-				console.log("saving tags: ", tags);
-				var t = new Tag();
-				t.label = tags;
-				t.save(function(err) {
-					if (err) {
-						console.log("Error saving tag: ", tags)
-						res.status(400).send(err);
-					}
-				});
-			}
-			else {
-				console.log("Tag already exists: ", tag);
-			}
+		tags.forEach(function(iTag) {
+			Tag.findOne({label: iTag}, function(err, tag) {
+				console.log("tag found: ", tag);
+				if (err) {
+					log.console("Error finding distinct tag: ", tag);
+				}
+				else if (tag == null) {
+					console.log("saving tag: ", iTag);
+					var t = new Tag();
+					t.label = iTag;
+					t.save(function(err) {
+						if (err) {
+							console.log("Error saving tag: ", iTag)
+							res.status(400).send(err);
+						}
+					});
+				}
+				else {
+					console.log("Tag already exists: ", tag);
+				}
 
+			});
 		});
 	})
 	.get(function(req,res) {
